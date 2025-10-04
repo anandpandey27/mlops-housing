@@ -7,3 +7,4 @@ model = KernelRidge()
 model = train_model(model, X_train, y_train)
 mse = evaluate_model(model, X_test, y_test)
 print(f"Kernel Ridge MSE: {mse:.2f}")
+    

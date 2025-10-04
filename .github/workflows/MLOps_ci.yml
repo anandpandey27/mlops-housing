@@ -32,4 +32,4 @@ jobs:
       - name: Run Kernel Ridge
         if: ${{ contains(github.ref, 'kernelridge') || contains(github.ref, 'main') }}
         run: |
-          if [ -f kernelridge/train.py ]; then python kernelridge/train.py; fi
+          if [ -f kernelridge/train.py ]; then python kernelridge/train2.py; fi
