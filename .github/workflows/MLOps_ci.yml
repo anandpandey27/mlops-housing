@@ -1,0 +1,35 @@
+name: MLOps CI
+
+on:
+  push:
+    branches: [main, dtree, kernelridge]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          if [ -f dtree/requirements.txt ]; then pip install -r dtree/requirements.txt; fi
+          if [ -f kernelridge/requirements.txt ]; then pip install -r kernelridge/requirements.txt; fi
+
+      - name: Run Decision Tree
+        if: ${{ contains(github.ref, 'dtree') || contains(github.ref, 'main') }}
+        run: |
+          if [ -f dtree/train.py ]; then python dtree/train.py; fi
+
+      - name: Run Kernel Ridge
+        if: ${{ contains(github.ref, 'kernelridge') || contains(github.ref, 'main') }}
+        run: |
+          if [ -f kernelridge/train.py ]; then python kernelridge/train.py; fi
